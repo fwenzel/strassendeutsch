@@ -28,8 +28,8 @@ auf github verfügbar.
 [gh-wb]: https://github.com/fwenzel/woerterbuch
 
 
-License
--------
+Lizenz
+------
 Diese Software ist unter einer [BSD-Lizenz][BSD] verfügbar. Für weitere
 Informationen lesen Sie die Datei ``LICENSE``.
 
