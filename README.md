@@ -28,6 +28,14 @@ auf github verfügbar.
 [gh-wb]: https://github.com/fwenzel/woerterbuch
 
 
+Danke
+-----
+Vielen Dank an:
+
+* [Twitter Bootstrap](http://twitter.github.com/bootstrap/) für CSS/JS
+* [Yusuke Kamiyamane](http://p.yusukekamiyamane.com/) für das favicon
+
+
 Lizenz
 ------
 Diese Software ist unter einer [BSD-Lizenz][BSD] verfügbar. Für weitere
