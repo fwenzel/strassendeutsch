@@ -6,6 +6,11 @@ MONGODB_USERNAME = None
 MONGODB_PASSWORD = None
 
 
+## Flask-WTF
+CSRF_ENABLED = True
+#CSRF_SESSION_KEY = _csrf_token
+
+
 ## Import local config file, if it exists.
 try:
     from woerterbuch.settings_local import *

@@ -1,3 +1,9 @@
+# Framework
 Flask==0.8
-Flask-MongoKit==0.3
 Jinja2==2.6
+
+# DB
+Flask-MongoKit==0.3
+
+# Forms
+Flask-WTF==0.5.2
