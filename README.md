@@ -34,6 +34,8 @@ Vielen Dank an:
 
 * [Twitter Bootstrap](http://twitter.github.com/bootstrap/) für CSS/JS
 * [Yusuke Kamiyamane](http://p.yusukekamiyamane.com/) für das favicon
+* [PC Unleashed](http://www.iconfinder.com/icondetails/62105/256/books_learn_school_study_icon)
+  für das Buch-Icon
 
 
 Lizenz
