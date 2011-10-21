@@ -1,5 +1,5 @@
-#index {
-    padding-top: 50px;
+body {
+    padding-top: 60px;
 }
 #index .hero-unit {
     background-image: url('../img/books256.png');
