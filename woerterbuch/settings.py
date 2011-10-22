@@ -6,7 +6,7 @@ MONGODB_USERNAME = None
 MONGODB_PASSWORD = None
 
 
-## Session settings (set this!)
+## Session settings (set this to a random string!)
 SECRET_KEY = None
 
 
