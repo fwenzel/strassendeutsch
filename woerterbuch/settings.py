@@ -6,6 +6,10 @@ MONGODB_USERNAME = None
 MONGODB_PASSWORD = None
 
 
+## Session settings (set this!)
+SECRET_KEY = None
+
+
 ## Flask-WTF
 CSRF_ENABLED = True
 #CSRF_SESSION_KEY = _csrf_token

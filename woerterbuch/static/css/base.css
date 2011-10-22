@@ -1,6 +1,11 @@
 body {
     padding-top: 60px;
 }
+.help-block {
+    color: #666;
+}
+
+
 #index .hero-unit {
     background-image: url('../img/books256.png');
     background-position: center right;
@@ -9,4 +14,12 @@ body {
 }
 #index .hero-unit h1 {
     margin: 0 0 .2em 0;
+}
+
+
+#new form {
+    margin-top: 1em;
+}
+#new label {
+    font-weight: bold;
 }

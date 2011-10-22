@@ -1,5 +1,7 @@
 {% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
 
+{% block title %}Neues Wort{% endblock %}
 {% block content_id %}new{% endblock %}
 
 {% block content %}
@@ -7,13 +9,44 @@
   <div class="span16">
     <h2>Ein neues Wort hinzufügen</h2>
     <p>Du kennst ein Wort, das noch nicht im <em>Wörterbuch</em> steht? Prima!
-    Na dann lass mal hören.</p>
+      Immer her damit.</p>
   </div>
 </div>
 <div class="row">
   <div class="span16">
-    <form>
-      <label for="title">Wort</label>
+    <form method="POST" action="{{ url_for('new_word') }}">
+      {{ form.csrf }}
+
+      <fieldset>
+        <legend>Na, dann lass mal hören!</legend>
+        {{ render_field(form.title, class="span6") }}
+      </fieldset>
+
+      <fieldset>
+        <legend>Was bedeutet es?</legend>
+        {{ render_field(form.definition, class="span6",
+        help='Langsam, langsam, keine Insider-Witze! Jeder sollte verstehen '
+        'können, wovon du redest.') }}
+        {{ render_field(form.tags, class="span6",
+        help='Gib <strong>mindestens 5</strong> Schlüsselworte ein, die diesen '
+             'Begriff beschreiben. Das können z.B. Synonyme, Gegensätze, oder '
+             'ähnliche Begriffe sein.'|safe) }}
+      </fieldset>
+
+      <fieldset>
+        <legend>Und wer bist du?</legend>
+        {{ render_field(form.email, class="span6",
+        help='Wir mögen Spam genau so wenig wie du. Wir geben deine Adresse '
+             'nicht weiter und <strong>wir senden dir keinen Spam. '
+             'Ehrenwort.</strong>'|safe) }}
+       {{ render_field(form.nickname, class="span6",
+       help='Deine E-Mail wird nicht angezeigt, dein Spitzname '
+            'aber schon. <strong>Verwende nicht deinen richtigen Namen.'
+            '</strong>'|safe
+       ) }}
+      </fieldset>
+
+      <button type="submit" class="btn large primary">Los geht's!</button>
     </form>
   </div>
 </div>

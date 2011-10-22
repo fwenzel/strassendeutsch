@@ -1,6 +1,7 @@
-from flask import render_template
+from flask import request, render_template
 
 from woerterbuch import app
+from woerterbuch.forms import NewWordForm
 from woerterbuch.models import db
 
 @app.route('/')
@@ -10,4 +11,8 @@ def index():
 
 @app.route('/new', methods=["GET", "POST"])
 def new_word():
-    return render_template('new.html')
+    form = NewWordForm(request.form)
+    if form.validate_on_submit():
+        #flash("Success")
+        pass
+    return render_template('new.html', form=form)
