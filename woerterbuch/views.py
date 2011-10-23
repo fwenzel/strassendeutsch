@@ -6,11 +6,14 @@ from woerterbuch.models import db
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    """Front page."""
+    words = [db.Word.find_random() for i in xrange(3)]
+    return render_template('index.html', words=words)
 
 
 @app.route('/new', methods=["GET", "POST"])
 def new_word():
+    """New word submission."""
     form = NewWordForm(request.form)
     if form.validate_on_submit():
         word = db.Word()
