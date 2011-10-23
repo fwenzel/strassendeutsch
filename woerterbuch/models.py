@@ -33,7 +33,10 @@ class Word(Document):
         'votes.down': 0,
     }
     use_dot_notation = True
-
+    indexes = [
+        {'fields': ['title', 'user.email'],
+         'unique': True}
+    ]
 
 db = MongoKit(app)
 db.register([Word])
