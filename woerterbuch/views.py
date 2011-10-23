@@ -26,3 +26,9 @@ def new_word():
         #flash("Success")
         return redirect(url_for('index'))
     return render_template('new.html', form=form)
+
+
+@app.route('/<slug>-<regex("[0-9a-f]{6}"):token>')
+def detail(slug, token):
+    word = db.Word.find_one_or_404({'url.slug': slug, 'url.token': token})
+    return render_template('detail.html', word=word)

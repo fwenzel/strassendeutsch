@@ -33,7 +33,7 @@
     <div class="span5">
       <h2>{{ word.title }}</h2>
       <p>{{ word.definition }}</p>
-      <p><a class="btn" href="#">View details &raquo;</a></p>
+      <p><a class="btn" href="{{ word.to_url }}">View details &raquo;</a></p>
     </div>
   {% endfor %}
 </div>

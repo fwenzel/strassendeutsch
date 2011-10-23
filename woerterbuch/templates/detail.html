@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ word.title }}{% endblock %}
+{% block content_id %}detail{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="span10">
+    <h2>{{ word.title }}</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="span10">
+    <p>{{ word.definition }}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="span10">
+    <p>
+    {% for tag in word.tags %}
+      <span class="label">{{ tag }}</span>
+    {% endfor %}
+    </p>
+  </div>
+</div>
+{% endblock %}
