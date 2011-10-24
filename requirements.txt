@@ -8,3 +8,6 @@ Flask-MongoKit==0.3
 # Forms
 WTForms==0.6.3
 Flask-WTF==0.5.2
+
+# Maintenance
+Flask-Script==0.3.1
