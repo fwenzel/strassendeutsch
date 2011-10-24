@@ -40,8 +40,8 @@ Vielen Dank an:
 
 Lizenz
 ------
-Diese Software ist unter einer [BSD-Lizenz][BSD] verfügbar. Für weitere
+Diese Software ist unter der [GPL-Lizenz][GPL] verfügbar. Für weitere
 Informationen lesen Sie die Datei ``LICENSE``.
 
-[BSD]: http://www.opensource.org/licenses/bsd-license.php
+[GPL]: http://www.gnu.org/copyleft/gpl.html
 
