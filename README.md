@@ -1,7 +1,8 @@
-woerterbuch
-===========
+Straßendeutsch
+==============
 
-*woerterbuch* ist ein experimentelles Wörterbuch der deutschen Umgangssprache.
+*Straßendeutsch* ist ein experimentelles Wörterbuch der deutschen
+Umgangssprache.
 
 Warum?
 ------
