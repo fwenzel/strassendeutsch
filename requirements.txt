@@ -6,4 +6,5 @@ Jinja2==2.6
 Flask-MongoKit==0.3
 
 # Forms
+WTForms==0.6.3
 Flask-WTF==0.5.2
