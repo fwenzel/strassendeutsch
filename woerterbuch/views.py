@@ -7,6 +7,7 @@ from woerterbuch import app
 from woerterbuch.forms import NewWordForm
 from woerterbuch.models import db
 
+
 @app.route('/')
 def index():
     """Front page."""
@@ -14,7 +15,7 @@ def index():
     return render_template('index.html', words=words)
 
 
-@app.route('/new', methods=["GET", "POST"])
+@app.route('/new', methods=("GET", "POST"))
 def new_word():
     """New word submission."""
     form = NewWordForm(request.form)
@@ -46,5 +47,19 @@ def new_word():
 
 @app.route('/<slug>-<regex("[0-9a-f]{6}"):token>')
 def detail(slug, token):
+    """Detail page for a single word."""
     word = db.Word.find_one_or_404({'url.slug': slug, 'url.token': token})
     return render_template('detail.html', word=word)
+
+
+@app.route('/vote/<regex("[01]"):up>/<ObjectId:id>',
+           methods=('GET', 'POST'))
+def vote(up, id):
+    """Vote up/down for a single word. AJAX action."""
+    direction = 'votes.up' if int(up) else 'votes.down'
+    word = db.Word.get_or_404(id)
+    db.Word.collection.update({'_id': id}, {"$inc" : { direction: 1 }})
+
+    if not request.is_xhr:
+        flash(u'Danke für deine Stimme!', 'success')
+        return redirect(word.to_url)

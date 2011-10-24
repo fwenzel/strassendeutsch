@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "macros.html" import vote %}
 
 {% block searchbox %}{% endblock %}
 
@@ -31,9 +32,9 @@
 <div class="row">
   {% for word in words %}
     <div class="span5">
-      <h2>{{ word.title }}</h2>
+      <h2>{{ word.title }} {{ vote(word) }}</h2>
       <p>{{ word.definition }}</p>
-      <p><a class="btn" href="{{ word.to_url }}">View details &raquo;</a></p>
+      <p><a class="btn small" href="{{ word.to_url }}">Details &raquo;</a></p>
     </div>
   {% endfor %}
 </div>

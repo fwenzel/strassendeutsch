@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "macros.html" import vote %}
 
 {% block title %}{{ word.title }}{% endblock %}
 {% block content_id %}detail{% endblock %}
@@ -6,7 +7,10 @@
 {% block content %}
 <div class="row">
   <div class="span10">
-    <h2>{{ word.title }}</h2>
+    <h2>
+      {{ word.title }}
+      {{ vote(word) }}
+    </h2>
   </div>
 </div>
 <div class="row">

@@ -23,3 +23,15 @@ body {
 #new label {
     font-weight: bold;
 }
+
+h2 .vote {
+    margin-left: .5em;
+}
+.vote img {
+    opacity: .4;
+    padding: 0 .15em;
+    vertical-align: middle;
+}
+.vote img:hover {
+    opacity: 1;
+}
