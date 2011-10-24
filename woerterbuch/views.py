@@ -1,4 +1,7 @@
-from flask import request, render_template, redirect, url_for
+# -*- coding: utf-8 -*-
+from flask import request, render_template, redirect, url_for, flash
+from jinja2 import Markup
+from pymongo.errors import DuplicateKeyError
 
 from woerterbuch import app
 from woerterbuch.forms import NewWordForm
@@ -22,9 +25,22 @@ def new_word():
         word.tags = form.tags.data
         word.user.email = form.email.data
         word.user.nickname = form.nickname.data
-        word.save()
-        #flash("Success")
-        return redirect(url_for('index'))
+        try:
+            word.save()
+        except DuplicateKeyError:
+            flash(Markup(
+                u'<strong>Hoppla!</strong> Sieht so aus, als ob wir deine '
+                u'Definition schon haben!'), 'error')
+        except Exception, e:
+            flash(Markup(
+                u'<strong>Ohje!</strong> Beim Speichern ist etwas schief '
+                u'gelaufen. Bitte versuch es noch einmal, und falls alles '
+                u'nichts hilft, sag uns bescheid und erwähne diesen Fehler: '
+                u'<em>%s</em>') % e, 'error')
+        else:
+            flash(Markup(u'<strong>Hurra!</strong> Vielen Dank für dieses '
+                         u'neue Wort!'), 'success')
+            return redirect(url_for('index'))
     return render_template('new.html', form=form)
 
 

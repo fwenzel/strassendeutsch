@@ -36,6 +36,20 @@
     </div>
 
     <div class="container" id="{% block content_id %}{% endblock %}">
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="messages">
+            {% for category, message in messages %}
+              <div class="alert-message {{ category }}" data-alert="">
+                <a class="close" href="#">×</a>
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
       {% block content %}{% endblock %}
 
       <footer>
@@ -44,5 +58,9 @@
 
     </div> <!-- /container -->
 
+    {% block site_js %}
+    <script src="{{ url_for('static', filename='js/jquery-1.6.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap-alerts.js') }}"></script>
+    {% endblock %}
   </body>
 </html>
