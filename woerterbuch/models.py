@@ -62,7 +62,6 @@ class Word(Document):
         else:
             newfilter = rndfilter
 
-        print newfilter
         res = super(Word, self).find(newfilter, sort=[('url.token',
                                                        pymongo.DESCENDING)])
         if not res:
