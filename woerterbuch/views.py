@@ -11,7 +11,7 @@ from woerterbuch.models import db
 @app.route('/')
 def index():
     """Front page."""
-    words = [db.Word.find_random() for i in xrange(3)]
+    words = db.Word.find_randomized({'votes.up': {'$gte': 3}}).limit(3)
     return render_template('index.html', words=words)
 
 

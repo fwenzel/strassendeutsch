@@ -6,6 +6,7 @@ import re
 from flask import url_for
 from flaskext.mongokit import MongoKit, Document
 from mongokit import ValidationError
+import pymongo
 
 from woerterbuch import app
 from woerterbuch.utils import slugify
@@ -45,7 +46,31 @@ class Word(Document):
         {'fields': ['title', 'user.email'],
          'unique': True},
         {'fields': ['url.token', 'url.slug'],},
+        {'fields': ['created']},
+        {'fields': ['votes.up', 'votes.down', 'url.token']},
     ]
+
+    def find_randomized(self, filters=None):
+        """
+        Implementation of find_random that actually finds *and*
+        randomizes.
+        """
+        rnd = self.default_values['url.token']()
+        rndfilter = {'url.token': {'$lte': rnd}}
+        if filters:
+            newfilter = {'$and': [filters, rndfilter]}
+        else:
+            newfilter = rndfilter
+
+        print newfilter
+        res = super(Word, self).find(newfilter, sort=[('url.token',
+                                                       pymongo.DESCENDING)])
+        if not res:
+            rndfilter['url.token'] = {'$gt': rnd}
+            res = super(Word, self).find(newfilter, sort=[('url.token',
+                                                           pymongo.ASCENDING)])
+        return res
+
 
     def save(self, *args, **kwargs):
         self.url.slug = slugify(self.title)
