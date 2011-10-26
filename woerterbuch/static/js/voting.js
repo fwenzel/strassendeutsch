@@ -23,13 +23,15 @@ var voting = {
         if (!window.localStorage) return;  // Tough luck.
 
         var votes = voting.get_stored();
-        if (!votes) {
-            voting.set_stored([{w: wordid, u: up}]);
-        } else {
-            votes.push({w: wordid, u: up});
-            while (votes.length > voting.max_remember) votes.shift();
-            voting.set_stored(votes);
+        if (!votes) votes = {}
+        votes[wordid] = {u: up, d: new Date().getTime()};
+        while (Object.keys(votes).length > voting.max_remember) {
+            var dates = {};
+            for (w in votes) dates[votes[w]['d']] = w;  // Map date -> word
+            var mindate = Math.min.apply(Math, Object.keys(dates));
+            delete votes[dates[mindate]];
         }
+        voting.set_stored(votes);
     },
 
     // Get array of stored votes, null if none.
@@ -68,7 +70,7 @@ $(function() {
 
         var votes = voting.get_stored();
         for (i in votes) {
-            var link = voting.find_link(votes[i]['w'], votes[i]['u']);
+            var link = voting.find_link(i, votes[i]['u']);
             voting.mark_voted(link);
         }
     })();

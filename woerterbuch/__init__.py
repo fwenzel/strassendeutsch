@@ -1,4 +1,5 @@
 from flask import Flask
+from flaskext.cache import Cache
 from flaskext.mongokit import BSONObjectIdConverter
 from werkzeug.routing import BaseConverter
 
@@ -19,6 +20,10 @@ class RegexConverter(BaseConverter):
 app.url_map.converters['regex'] = RegexConverter
 
 app.url_map.converters['ObjectId'] = BSONObjectIdConverter
+
+
+# Caching
+cache = Cache(app)
 
 
 import woerterbuch.views

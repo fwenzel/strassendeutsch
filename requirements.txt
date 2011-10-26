@@ -2,8 +2,9 @@
 Flask==0.8
 Jinja2==2.6
 
-# DB
+# DB and Caching
 Flask-MongoKit==0.3
+Flask-Cache==0.3.4
 
 # Forms
 WTForms==0.6.3

@@ -3,7 +3,7 @@ from flask import request, render_template, redirect, url_for, flash
 from jinja2 import Markup
 from pymongo.errors import DuplicateKeyError
 
-from woerterbuch import app
+from woerterbuch import app, cache
 from woerterbuch.forms import NewWordForm
 from woerterbuch.models import db
 
@@ -56,9 +56,30 @@ def detail(slug, token):
            methods=('GET', 'POST'))
 def vote(up, id):
     """Vote up/down for a single word. AJAX action."""
-    direction = 'votes.up' if int(up) else 'votes.down'
     word = db.Word.get_or_404(id)
-    db.Word.collection.update({'_id': id}, {"$inc" : { direction: 1 }})
+
+    vote_up = int(up)  # 0 or 1
+    directions = ('votes.up', 'votes.down')
+
+    # Remember votes, do not allow double voting.
+    # We cache: '<ip_addr>:<wordid> => [01]', e.g.: '127.0.0.1:43a...0001 => 1'
+    ip = request.remote_addr
+    vote = cache.get('%s:%s' % (ip, id))
+    if not vote or vote != up:
+        to_update = {}  # Pending DB updates.
+
+        # If previously voted, update vote, do not recount.
+        if vote != up:
+            to_update[directions[int(not vote_up)]] = -1
+
+        # Cast vote now.
+        to_update[directions[vote_up]] = 1
+
+        db.Word.collection.update({'_id': id}, {"$inc": to_update})
+
+        # ... and remember this.
+        cache.set('%s:%s' % (ip, id), up,
+                  timeout=app.config['CACHE_VOTE_TIMEOUT'])
 
     if not request.is_xhr:
         flash(u'Danke für deine Stimme!', 'success')
