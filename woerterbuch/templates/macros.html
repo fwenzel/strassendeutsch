@@ -1,9 +1,9 @@
 {% macro vote(word) %}
-<span class="vote">
-  <a href="{{ url_for('vote', up='1', id=word._id) }}"><img
+<span class="vote" data-wordid="{{ word._id }}">
+  <a href="{{ url_for('vote', up='1', id=word._id) }}" class="up"><img
     src="{{ url_for('static', filename='img/up.gif') }}" alt="Daumen hoch"
     title="Daumen hoch"></a>{#
-  #}<a href="{{ url_for('vote', up='0', id=word._id) }}"><img
+  #}<a href="{{ url_for('vote', up='0', id=word._id) }}" class="down"><img
     src="{{ url_for('static', filename='img/down.gif') }}" alt="Daumen runter"
     title="Daumen runter"></a>
 </span>

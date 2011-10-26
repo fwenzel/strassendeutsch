@@ -35,3 +35,6 @@ h2 .vote {
 .vote img:hover {
     opacity: 1;
 }
+.vote .clicked img {
+    opacity: 1;
+}

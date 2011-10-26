@@ -63,3 +63,5 @@ def vote(up, id):
     if not request.is_xhr:
         flash(u'Danke für deine Stimme!', 'success')
         return redirect(word.to_url)
+    else:
+        return 'ok'
