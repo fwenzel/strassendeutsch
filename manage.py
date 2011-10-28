@@ -45,7 +45,8 @@ def create_test_data(num=20):
 
         word = db.Word()
         word.title = u'Test_%s' % title
-        word.definition = u' '.join(title for _ in xrange(3))
+        word.definition = u' '.join(title for _ in
+                                    xrange(random.randint(3, 30)))
         word.tags = tags
         word.user.email = u'%s@example.com' % title
         word.user.nickname = u'user_%s' % title
