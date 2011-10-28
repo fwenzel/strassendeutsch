@@ -6,10 +6,7 @@
   #}<a href="{{ url_for('vote', up='0', id=word._id) }}" class="down"><img
     src="{{ url_for('static', filename='img/down.gif') }}" alt="Daumen runter"
     title="Daumen runter"></a><br>{#
-  #}<span class="counts"><strong title="hoch">{{ word.votes.up }}</strong> /
-    <strong title="runter">{{ word.votes.down }}</strong></span>
+  #}<span class="counts"><strong class="up" title="hoch">{{ word.votes.up }}</strong> /
+    <strong class="down" title="runter">{{ word.votes.down }}</strong></span>
 </div>
-{% endmacro %}
-
-{% macro pagination(paginator) %}
 {% endmacro %}

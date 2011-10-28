@@ -14,7 +14,7 @@ var voting = {
         $.post(clicked.attr('href'), null,
             function(d, txt) {
                 voting.store_vote(wordid, up);
-                voting.mark_voted(clicked);
+                voting.mark_voted(clicked, true);
             });
     },
 
@@ -49,9 +49,29 @@ var voting = {
     },
 
     // Mark a word voted-for, without actually submitting a vote.
-    mark_voted: function(link) {
-        link.addClass('clicked')
-            .siblings('a').removeClass('clicked');
+    mark_voted: function(link, fix_counts) {
+        var other_link = link.siblings('a:eq(0)'),
+            counts = link.siblings('.counts');
+
+        if (fix_counts) {
+            // Increment this link.
+            if (!link.hasClass('clicked'))
+                voting.change_count(counts, link.hasClass('up') ? 'up' : 'down', 1)
+
+            // Decrement the other, if necessary.
+            if (other_link.hasClass('clicked'))
+                voting.change_count(counts, other_link.hasClass('up') ? 'up' : 'down', -1)
+        }
+
+        link.addClass('clicked');
+        other_link.removeClass('clicked');
+    },
+
+    // Increment/decrement a count number
+    change_count: function(counts, direction, amount) {
+        var count = counts.find('.' + direction),
+            num = parseInt(count.text());
+        count.text(num + amount);
     }
 };
 
@@ -71,7 +91,7 @@ $(function() {
         var votes = voting.get_stored();
         for (i in votes) {
             var link = voting.find_link(i, votes[i]['u']);
-            voting.mark_voted(link);
+            voting.mark_voted(link, false);
         }
     })();
 });
