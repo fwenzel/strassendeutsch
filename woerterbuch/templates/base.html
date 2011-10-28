@@ -11,6 +11,7 @@
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <link href='http://fonts.googleapis.com/css?family=Lobster&text=acdehnrsStu%C3%9F' rel='stylesheet'>
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -21,10 +22,10 @@
     <div class="topbar">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="{{ url_for('index') }}">Straßendeutsch</a>
+          <a class="brand" href="{{ url_for('index') }}">{{ strassendeutsch }}</a>
           <ul class="nav">
             <li class="active"><a href="#">Hauptseite</a></li>
-            <li><a href="#about">Über Straßendeutsch</a></li>
+            <li><a href="#about">Über {{ strassendeutsch }}</a></li>
           </ul>
           {% block searchbox %}
             <form class="pull-right">
@@ -53,7 +54,7 @@
       {% block content %}{% endblock %}
 
       <footer>
-        <p>&copy; <a href="http://fredericiana.com">Fred Wenzel</a>, 2011</p>
+      <p>{{ strassendeutsch }} ist ein Projekt von <a href="http://fredericiana.com">Fred Wenzel</a>, &copy; 2011</p>
       </footer>
 
     </div> <!-- /container -->

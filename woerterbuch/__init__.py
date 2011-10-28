@@ -5,7 +5,6 @@ from werkzeug.routing import BaseConverter
 
 from woerterbuch import settings
 
-
 app = Flask(__name__)
 app.config.from_object('woerterbuch.settings')
 app.secret_key = settings.SECRET_KEY
@@ -26,4 +25,8 @@ app.url_map.converters['ObjectId'] = BSONObjectIdConverter
 cache = Cache(app)
 
 
+# Templates
+import woerterbuch.context_processors
+
+# Views
 import woerterbuch.views

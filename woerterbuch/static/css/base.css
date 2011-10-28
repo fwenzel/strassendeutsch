@@ -1,6 +1,12 @@
 body {
     padding-top: 60px;
 }
+
+.wordmark {
+    font-family: 'Lobster', cursive;
+    font-weight: normal;
+}
+
 .help-block {
     color: #666;
 }
@@ -52,4 +58,8 @@ body {
 #vote_new .word,
 #vote_new .aufnehmen {
     margin: 20px 0;
+}
+
+footer p {
+    opacity: .7;
 }
