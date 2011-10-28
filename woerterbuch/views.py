@@ -77,9 +77,9 @@ def vote(up, id, vote_new):
         to_update = {}  # Pending DB updates.
 
         # Count a vote unless this is a "don't know".
-        if vote_up != 2:
+        if up != '2':
             # If previously voted, update vote, do not recount.
-            if vote != up:
+            if up not in (vote, '2'):
                 to_update[directions[int(not vote_up)]] = -1
 
             # Cast vote now.
