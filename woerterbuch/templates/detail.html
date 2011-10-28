@@ -7,10 +7,8 @@
 {% block content %}
 <div class="row">
   <div class="span10">
-    <h2>
-      {{ word.title }}
-      {{ vote(word) }}
-    </h2>
+    {{ vote(word) }}
+    <h2>{{ word.title }}</h2>
   </div>
 </div>
 <div class="row">
