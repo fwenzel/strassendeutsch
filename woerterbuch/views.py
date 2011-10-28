@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from flask import request, render_template, redirect, url_for, flash
+from flask import request, render_template, redirect, url_for, flash, abort
 from jinja2 import Markup
+import pymongo
 from pymongo.errors import DuplicateKeyError
 
 from woerterbuch import app, cache
@@ -53,13 +54,20 @@ def detail(slug, token):
 
 
 @app.route('/vote/<regex("[01]"):up>/<ObjectId:id>',
-           methods=('GET', 'POST'))
-def vote(up, id):
-    """Vote up/down for a single word. AJAX action."""
+           methods=('GET', 'POST'), defaults={'vote_new': False})
+@app.route('/vote/new/<regex("[012]"):up>/<ObjectId:id>',
+           methods=('GET', 'POST'), defaults={'vote_new': True})
+def vote(up, id, vote_new):
+    """
+    Vote up/down for a single word. AJAX action.
+    Possible votes: 0 = vote down
+                    1 = vote up
+                    2 = don't know
+    """
     word = db.Word.get_or_404(id)
 
-    vote_up = int(up)  # 0 or 1
-    directions = ('votes.up', 'votes.down')
+    vote_up = int(up)  # 0, 1, or 2
+    directions = ('votes.down', 'votes.up')
 
     # Remember votes, do not allow double voting.
     # We cache: '<ip_addr>:<wordid> => [01]', e.g.: '127.0.0.1:43a...0001 => 1'
@@ -68,14 +76,16 @@ def vote(up, id):
     if not vote or vote != up:
         to_update = {}  # Pending DB updates.
 
-        # If previously voted, update vote, do not recount.
-        if vote != up:
-            to_update[directions[int(not vote_up)]] = -1
+        # Count a vote unless this is a "don't know".
+        if vote_up != 2:
+            # If previously voted, update vote, do not recount.
+            if vote != up:
+                to_update[directions[int(not vote_up)]] = -1
 
-        # Cast vote now.
-        to_update[directions[vote_up]] = 1
+            # Cast vote now.
+            to_update[directions[vote_up]] = 1
 
-        db.Word.collection.update({'_id': id}, {"$inc": to_update})
+            db.Word.collection.update({'_id': id}, {"$inc": to_update})
 
         # ... and remember this.
         cache.set('%s:%s' % (ip, id), up,
@@ -83,6 +93,27 @@ def vote(up, id):
 
     if not request.is_xhr:
         flash(u'Danke für deine Stimme!', 'success')
-        return redirect(word.to_url)
+        if vote_new:
+            return redirect(url_for('vote_new'))
+        else:
+            return redirect(word.to_url)
     else:
         return 'ok'
+
+
+@app.route('/vote/new')
+def vote_new():
+    """Vote on new submissions."""
+    words = db.Word.find({'$and': [{'votes.up': {'$lt': 3}},
+                                   {'votes.down': {'$lt': 3}}]},
+                         sort=[('url.token', pymongo.ASCENDING)])
+
+    # Find a word that's not been voted on yet
+    ip = request.remote_addr
+    myword = None
+    for word in words:
+        if cache.get('%s:%s' % (ip, word._id)) is None:
+            myword = word
+            break
+
+    return render_template('vote_new.html', word=myword)

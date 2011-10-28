@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% from "macros.html" import vote %}
+
+{% block title %}Über Wörter abstimmen{% endblock %}
+{% block content_id %}vote_new{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="span10">
+    <h1>Über neue Wörter abstimmen</h1>
+    <p>Hier kannst du über <strong>neu eingegangene Wörter</strong>
+    entscheiden. Klicke <strong>Daumen hoch oder runter</strong>, je nach
+    dem ob die Beschreibung sinnvoll klingt oder nicht!</p>
+    <p><strong>Vielen Dank fürs Mitmachen!</strong></p>
+  </div>
+</div>
+
+{% if word %}
+  <div class="row">
+    <div class="word well">
+      <h2><a href="{{ word.to_url }}">{{ word.title }}</a></h2>
+      <p>{{ word.definition }}</p>
+      <p>
+      {% for tag in word.tags %}
+        <span class="label">{{ tag }}</span>
+      {% endfor %}
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12 alert-message block-message aufnehmen">
+      <h3>Soll dieses Wort in Straßendeutsch aufgenommen werden?</h3>
+      <p>Bitte beachte die unten stehenden Richtlinien.<p>
+      <div class="alert-actions">
+        <a class="btn large success"
+          href="{{ url_for('vote', up='1', id=word._id) }}">Aufnehmen</a>
+        <a class="btn large danger"
+          href="{{ url_for('vote', up='0', id=word._id) }}">Nicht
+          aufnehmen</a>
+        <a class="btn large info"
+          href="{{ url_for('vote', up='2', id=word._id) }}">Ich weiß
+          nicht</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span16">
+      <h3>Ein paar Daumenregeln:</h3>
+      <ol>
+        <li><strong>Ein Wort ist nicht schlecht, nur weil du es nicht kennst.</strong>
+        <br>Wähle "Daumen hoch", wenn es aussieht als könnte die Definition stimmen.</li>
+        <li><strong>Umgangssprachliche Worte sind okay.</strong><br>Stimme nicht
+        "Daumen runter", nur weil die Beschreibung Worte verwendet, die du nicht
+        in der Gegenwart deiner Großmutter sagen würdest.</li>
+        <li><strong>Beleidigungen von Personen sind nicht okay.</strong><br>
+        <em>"Hans Wurst (der Fußballspieler) ist ein Vollidiot"</em> ist nicht
+        erlaubt. <em>"Schwalbe: Der Lieblingsvogel aller Fußballspieler"</em>
+        hingegen schon.</li>
+      </ol>
+    </div>
+  </div>
+
+{% else %}
+  <div class="row">
+    <div class="span16">
+      <div class="alert-message block-message success">
+        <h3>Super!</h3>
+        <p>Sieht so aus, als seien keine Wörter verfügbar, die du noch nicht
+        bewertet hast.<p>
+        <p>Vielleicht möchtest du:</p>
+        <div class="alert-actions">
+          <a class="btn" href="{{ url_for('new_word') }}">Selbst ein
+            Wort hinzufügen?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

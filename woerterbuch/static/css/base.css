@@ -29,8 +29,10 @@ body {
     font-weight: bold;
 }
 
-h2 .vote {
-    margin-left: .5em;
+.vote {
+    float: right;
+    margin-top: .3em;
+    text-align: center;
 }
 .vote img {
     opacity: .4;
@@ -42,4 +44,12 @@ h2 .vote {
 }
 .vote .clicked img {
     opacity: 1;
+}
+.vote .counts {
+    opacity: .7;
+}
+
+#vote_new .word,
+#vote_new .aufnehmen {
+    margin: 20px 0;
 }
