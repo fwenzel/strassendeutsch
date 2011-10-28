@@ -18,6 +18,9 @@ CACHE_KEY_PREFIX = 'wb:'
 # CACHE_DIR  # filesystem cache only
 CACHE_VOTE_TIMEOUT = 24 * 60 * 60  # (not part of Flask-Cache) Time until IP/word vote cache times out.
 
+## Pagination
+PER_PAGE = 20
+
 
 ## Import local config file, if it exists.
 try:
