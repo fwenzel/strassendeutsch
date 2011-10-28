@@ -64,7 +64,7 @@ class Word(Document):
 
         res = super(Word, self).find(newfilter, sort=[('url.token',
                                                        pymongo.DESCENDING)])
-        if not res:
+        if not res.count():
             rndfilter['url.token'] = {'$gt': rnd}
             res = super(Word, self).find(newfilter, sort=[('url.token',
                                                            pymongo.ASCENDING)])
