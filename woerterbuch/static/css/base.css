@@ -16,6 +16,11 @@ body {
     margin: 0 0 .2em 0;
 }
 
+#index .word {
+    padding: 10px;
+    margin-left: 15px;
+}
+
 
 #new form {
     margin-top: 1em;

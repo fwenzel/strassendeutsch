@@ -31,10 +31,10 @@
 </div>
 <div class="row">
   {% for word in words %}
-    <div class="span5">
-      <h2>{{ word.title }} {{ vote(word) }}</h2>
+    <div class="span5 well word">
+      {{ vote(word) }}
+      <h2><a href="{{ word.to_url }}">{{ word.title }}</a></h2>
       <p>{{ word.definition }}</p>
-      <p><a class="btn small" href="{{ word.to_url }}">Details &raquo;</a></p>
     </div>
   {% endfor %}
 </div>
