@@ -16,7 +16,7 @@ CSRF_ENABLED = True
 CACHE_TYPE = 'simple'  # or null, memcached, filesystem, ...
 CACHE_KEY_PREFIX = 'wb:'
 # CACHE_DIR  # filesystem cache only
-CACHE_VOTE_TIMEOUT = 24 * 60 * 60  # (not part of Flask-Cache) Time until IP/word vote cache times out.
+CACHE_VOTE_TIMEOUT = 2 * 24 * 60 * 60  # (not part of Flask-Cache) Time until IP/word vote cache times out.
 
 ## Pagination
 PER_PAGE = 20
