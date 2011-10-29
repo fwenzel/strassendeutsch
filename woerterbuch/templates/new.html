@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% from "_formhelpers.html" import render_field %}
+{% from "macros.html" import nav %}
 
 {% block title %}Neues Wort{% endblock %}
 {% block content_id %}new{% endblock %}
+{% block nav %}{{ nav('new_word') }}{% endblock %}
 
 {% block content %}
 <div class="row">

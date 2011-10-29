@@ -23,10 +23,12 @@
       <div class="fill">
         <div class="container">
           <a class="brand" href="{{ url_for('index') }}">{{ strassendeutsch }}</a>
-          <ul class="nav">
-            <li class="active"><a href="#">Hauptseite</a></li>
-            <li><a href="#about">Über {{ strassendeutsch }}</a></li>
-          </ul>
+
+          {% from "macros.html" import nav %}
+          {% block nav %}
+            {{ nav() }}
+          {% endblock %}
+
           {% block searchbox %}
             <form class="pull-right">
               <input type="text" placeholder="Suchen...">

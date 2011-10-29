@@ -1,3 +1,20 @@
+{% macro nav(active='index') %}
+<nav>
+  <ul class="nav">
+    {% for title, short, href in (
+    ('Hauptseite', 'index', url_for('index')),
+    ('Neu', 'new_word', url_for('new_word')),
+    ('Abstimmen', 'vote_new', url_for('vote_new')),
+    ('Über <span class="wordmark">Straßendeutsch</span>'|safe, 'about', '#about')
+    ) %}
+    <li{{ ' class="active"'|safe if short == active else '' }}><a
+      href="{{ href }}">{{ title }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endmacro %}
+
+
 {% macro vote(word) %}
 <div class="vote" data-wordid="{{ word._id }}">
   <a href="{{ url_for('vote', up='1', id=word._id) }}" class="up"><img

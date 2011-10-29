@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% from "macros.html" import vote %}
+{% from "macros.html" import nav, vote %}
 
 {% block title %}Über Wörter abstimmen{% endblock %}
 {% block content_id %}vote_new{% endblock %}
+{% block nav %}{{ nav('vote_new') }}{% endblock %}
 
 {% block content %}
 <div class="row">
