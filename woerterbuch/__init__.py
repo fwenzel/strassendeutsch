@@ -3,7 +3,7 @@ from flaskext.cache import Cache
 from flaskext.mongokit import BSONObjectIdConverter
 from werkzeug.routing import BaseConverter
 
-from woerterbuch import settings
+import settings
 
 app = Flask(__name__)
 app.config.from_object('woerterbuch.settings')
