@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+import json
 import os
 import re
 
@@ -74,6 +75,15 @@ class Word(Document):
     def save(self, *args, **kwargs):
         self.url.slug = slugify(self.title)
         super(Word, self).save(*args, **kwargs)
+
+    def to_es_json(self):
+        """Convert this word to JSON for ElasticSearch."""
+        data = {
+            'title': self.title,
+            'definition': self.definition,
+            'tags': self.tags,
+        }
+        return json.dumps(data)
 
     @property
     def to_url(self):

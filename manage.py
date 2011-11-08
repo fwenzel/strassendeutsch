@@ -3,6 +3,7 @@ import random
 import string
 import sys
 
+from elasticutils import es_required
 from flaskext.script import Manager
 from mongokit import Connection
 import pymongo
@@ -61,6 +62,18 @@ def create_test_data(num=20):
         else:
             created += 1
     sys.stderr.write("Done: Created %d entries.\n" % created)
+
+
+@manager.command
+@es_required
+def reindex(es):
+    """Reindex all relevant words in ElasticSearch."""
+    es.delete_index_if_exists(app.config['ES_INDEX'])
+    es.create_index_if_missing(app.config['ES_INDEX'])
+
+    words = db.Word.find({'votes.up': {'$gte': 3}})
+    for word in words:
+        es.index(word.to_es_json(), app.config['ES_INDEX'], 'word', bulk=True)
 
 
 if __name__ == "__main__":

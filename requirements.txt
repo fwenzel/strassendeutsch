@@ -12,3 +12,7 @@ Flask-WTF==0.5.2
 
 # Maintenance
 Flask-Script==0.3.1
+
+# Search
+pyes==0.16.0
+elasticutils==0.2

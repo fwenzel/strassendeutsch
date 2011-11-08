@@ -21,9 +21,14 @@ CACHE_VOTE_TIMEOUT = 2 * 24 * 60 * 60  # (not part of Flask-Cache) Time until IP
 ## Pagination
 PER_PAGE = 20
 
+## ElasticSearch settings
+ES_HOSTS = ['127.0.0.1:9200']
+ES_INDEXES = {'default': 'words',}
+ES_DISABLED = False
+ES_INDEX = 'words'
 
 ## Import local config file, if it exists.
 try:
-    from woerterbuch.settings_local import *
+    from settings_local import *
 except ImportError:
     pass
