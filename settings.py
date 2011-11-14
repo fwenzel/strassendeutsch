@@ -19,7 +19,7 @@ CACHE_KEY_PREFIX = 'wb:'
 CACHE_VOTE_TIMEOUT = 2 * 24 * 60 * 60  # (not part of Flask-Cache) Time until IP/word vote cache times out.
 
 ## Pagination
-PER_PAGE = 20
+PER_PAGE = 10
 
 ## ElasticSearch settings
 ES_HOSTS = ['127.0.0.1:9200']

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import re
 
+from elasticutils import es_required
 from flask import request, render_template, redirect, url_for, flash, abort
 from jinja2 import Markup
+from pyes import query
 import pymongo
 from pymongo.errors import DuplicateKeyError
+from pymongo.objectid import ObjectId
 
 from woerterbuch import app, cache, elastic
 from woerterbuch.forms import NewWordForm
@@ -27,10 +30,18 @@ def detail(slug, token):
 
 
 @app.route('/search')
-def search():
-    q = request.args.get('q')
-    if q:
-        pass
+@es_required
+def search(es):
+    terms = request.args.get('q')
+
+    if not terms:
+        return redirect(url_for('index'))
+
+    q = query.Search(query.StringQuery(terms), fields=['_id'], start=None, size=app.config['PER_PAGE'])
+    res = es.search(q)
+    words = [db.Word.one({'_id': ObjectId(hit['_id'])}) for hit in
+             res['hits']['hits']]
+    return render_template('search.html', q=terms, words=words)
 
 
 @app.route('/new', methods=("GET", "POST"))
