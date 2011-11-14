@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
+import re
+
 from flask import request, render_template, redirect, url_for, flash, abort
 from jinja2 import Markup
 import pymongo
 from pymongo.errors import DuplicateKeyError
 
-from woerterbuch import app, cache
+from woerterbuch import app, cache, elastic
 from woerterbuch.forms import NewWordForm
 from woerterbuch.models import db
 
@@ -12,8 +14,23 @@ from woerterbuch.models import db
 @app.route('/')
 def index():
     """Front page."""
-    words = db.Word.find_randomized({'votes.up': {'$gte': 3}}).limit(3)
+    words = db.Word.find_randomized({'votes.up': {
+        '$gte': app.config['MIN_VOTES']}}).limit(3)
     return render_template('index.html', words=words)
+
+
+@app.route('/<slug>-<regex("[0-9a-f]{6}"):token>')
+def detail(slug, token):
+    """Detail page for a single word."""
+    word = db.Word.find_one_or_404({'url.slug': slug, 'url.token': token})
+    return render_template('detail.html', word=word)
+
+
+@app.route('/search')
+def search():
+    q = request.args.get('q')
+    if q:
+        pass
 
 
 @app.route('/new', methods=("GET", "POST"))
@@ -44,13 +61,6 @@ def new_word():
                          u'neue Wort!'), 'success')
             return redirect(url_for('index'))
     return render_template('new.html', form=form)
-
-
-@app.route('/<slug>-<regex("[0-9a-f]{6}"):token>')
-def detail(slug, token):
-    """Detail page for a single word."""
-    word = db.Word.find_one_or_404({'url.slug': slug, 'url.token': token})
-    return render_template('detail.html', word=word)
 
 
 @app.route('/vote/<regex("[01]"):up>/<ObjectId:id>',
@@ -91,6 +101,14 @@ def vote(up, id, vote_new):
         cache.set('%s:%s' % (ip, id), up,
                   timeout=app.config['CACHE_VOTE_TIMEOUT'])
 
+        # Index word if enough votes have been cast. If fewer,
+        # remove from index
+        word = db.Word.one({'_id': id})
+        if word.votes.up >= app.config['MIN_VOTES']:
+            elastic.index_word(word=word)
+        else:
+            elastic.remove_word(word=word)
+
     if not request.is_xhr:
         flash(u'Danke für deine Stimme!', 'success')
         if vote_new:
@@ -104,9 +122,10 @@ def vote(up, id, vote_new):
 @app.route('/vote/new')
 def vote_new():
     """Vote on new submissions."""
-    words = db.Word.find({'$and': [{'votes.up': {'$lt': 3}},
-                                   {'votes.down': {'$lt': 3}}]},
-                         sort=[('url.token', pymongo.ASCENDING)])
+    words = db.Word.find(
+        {'$and': [{'votes.up': {'$lt': app.config['MIN_VOTES']}},
+                  {'votes.down': {'$lt': app.config['MIN_VOTES']}}]},
+        sort=[('url.token', pymongo.ASCENDING)])
 
     # Find a word that's not been voted on yet
     ip = request.remote_addr

@@ -9,7 +9,7 @@ from mongokit import Connection
 import pymongo
 from pymongo.errors import DuplicateKeyError
 
-from woerterbuch import app
+from woerterbuch import app, elastic
 from woerterbuch.models import db
 
 
@@ -71,9 +71,10 @@ def reindex(es):
     es.delete_index_if_exists(app.config['ES_INDEX'])
     es.create_index_if_missing(app.config['ES_INDEX'])
 
-    words = db.Word.find({'votes.up': {'$gte': 3}})
+    words = db.Word.find({'votes.up': {'$gte': app.config['MIN_VOTES']}})
     for word in words:
-        es.index(word.to_es_json(), app.config['ES_INDEX'], 'word', bulk=True)
+        elastic.index_word(word=word, force=True)
+    sys.stderr.write("Done: Indexed %d words.\n" % words.count())
 
 
 if __name__ == "__main__":

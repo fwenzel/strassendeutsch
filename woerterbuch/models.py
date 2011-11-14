@@ -32,6 +32,7 @@ class Word(Document):
             'token': unicode,
             'slug': unicode,
         },
+        'in_es': bool,  # Indexed in ElasticSearch?
         'created': datetime,
     }
     required_fields = ['title', 'definition', 'user.email', 'user.nickname',
@@ -41,6 +42,7 @@ class Word(Document):
         'votes.up': 0,
         'votes.down': 0,
         'url.token': lambda: unicode(os.urandom(3).encode('hex')),
+        'in_es': False,
     }
     use_dot_notation = True
     indexes = [

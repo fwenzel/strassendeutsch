@@ -27,6 +27,9 @@ ES_INDEXES = {'default': 'words',}
 ES_DISABLED = False
 ES_INDEX = 'words'
 
+## Voting/search indexing limit.
+MIN_VOTES = 3
+
 ## Import local config file, if it exists.
 try:
     from settings_local import *
