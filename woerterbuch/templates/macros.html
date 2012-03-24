@@ -3,6 +3,7 @@
   <ul class="nav">
     {% for title, short, href in (
     ('Hauptseite', 'index', url_for('index')),
+    ('Beste Worte', 'top_words', url_for('top_words')),
     ('Neu', 'new_word', url_for('new_word')),
     ('Abstimmen', 'vote_new', url_for('vote_new')),
     ('Über <span class="wordmark">Straßendeutsch</span>'|safe, 'about', url_for('about'))

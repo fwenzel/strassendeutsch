@@ -149,6 +149,13 @@ def vote_new():
     return render_template('vote_new.html', word=myword)
 
 
+@app.route('/top')
+def top_words():
+    """Top 20 words."""
+    words = db.Word.find(sort=[('votes.up', pymongo.DESCENDING)]).limit(20)
+    return render_template('top.html', words=words)
+
+
 @app.route('/about')
 def about():
     return render_template('about.html')
