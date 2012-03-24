@@ -30,8 +30,8 @@
           {% endblock %}
 
           {% block searchbox %}
-            <form class="pull-right">
-              <input type="text" placeholder="Suchen...">
+            <form class="pull-right" method="get" action="{{ url_for('search') }}">
+              <input type="text" name="q" value="{{ q }}" placeholder="Suchen...">
             </form>
           {% endblock %}
         </div>

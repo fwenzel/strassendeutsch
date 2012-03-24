@@ -8,12 +8,18 @@
 {% block content %}
 <div class="hero-unit">
   <h1>Hallo auch!</h1>
-  <p>Du weißt, was ein <em>Dünnbrettbohrer</em> ist, bist aber nicht ganz sicher,
-  was eigentlich <em>Bauarbeiterdekolleté</em> bedeutet? Dann bist du hier
-  genau richtig.</p>
+  <p>Du weißt, was ein <a href="{{ url_for('search', q='Dünnbrettbohrer') }}">Dünnbrettbohrer</a>
+    ist, bist aber nicht ganz sicher, was eigentlich
+    <a href="{{ url_for('search', q='Bauarbeiterdekolleté') }}">Bauarbeiterdekolleté</a>
+    bedeutet? Dann bist du hier genau richtig.</p>
   <p><strong>{{ strassendeutsch }} ist ein Wörterbuch der deutschen
     Umgangssprache.</strong></p>
-  <p>(Suchfeld hier)</p>
+  <p>
+    <form method="get" action="{{ url_for('search') }}">
+      <input type="text" name="q" value="{{ q }}" placeholder="Suchbegriff eingeben..." class="span5">
+      <button type="submit" class="btn primary">Los geht's!</button>
+    </form>
+  </p>
   <p>Und das beste ist: <strong>{{ strassendeutsch }} ist zum Mitmachen</strong>. Ein
   Wort ist noch nicht in der Liste? Kein Problem: Füge es ganz einfach hinzu!
   Alle Besucher können darüber abstimmen, wie gut eine Definition ist.
