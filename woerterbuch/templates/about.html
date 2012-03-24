@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Über Straßendeutsch{% endblock %}
+{% block content_id %}about{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="span16">
+    <h1>Über {{ strassendeutsch }}</h1>
+    <p>{{ strassendeutsch }} ist ein Wörterbuch der deutschen Umgangssprache.</p>
+
+    <h2>Lizenz</h2>
+    <p>{{ strassendeutsch }} ist ein Software-Experiment von <a href="http://fredericiana.com">Fred Wenzel</a>,
+      das unter anderem die Technologien Flask, MongoDB und ElasticSearch verwendet.
+      Diese Software ist Open Source und unter der GPL-Lizenz auf GitHub verfügbar.
+      Pull-Requests willkommen!</p>
+    <p>Die Einträge in diesem Wörterbuch sind unter einer
+      <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/">Creative-Commons-Lizenz</a>
+      (Namensnennung-Nicht-kommerziell-Weitergabe) verfügbar. Eine Kommerzielle Weiterverwendung ist
+      nicht zulässig.</p>
+  </div>
+</div>
+{% endblock %}

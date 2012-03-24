@@ -147,3 +147,8 @@ def vote_new():
             break
 
     return render_template('vote_new.html', word=myword)
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')

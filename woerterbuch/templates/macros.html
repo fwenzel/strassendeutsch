@@ -5,7 +5,7 @@
     ('Hauptseite', 'index', url_for('index')),
     ('Neu', 'new_word', url_for('new_word')),
     ('Abstimmen', 'vote_new', url_for('vote_new')),
-    ('Über <span class="wordmark">Straßendeutsch</span>'|safe, 'about', '#about')
+    ('Über <span class="wordmark">Straßendeutsch</span>'|safe, 'about', url_for('about'))
     ) %}
     <li{{ ' class="active"'|safe if short == active else '' }}><a
       href="{{ href }}">{{ title }}</a></li>
