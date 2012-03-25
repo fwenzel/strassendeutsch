@@ -2,11 +2,11 @@
 <nav>
   <ul class="nav">
     {% for title, short, href in (
-    ('Hauptseite', 'index', url_for('index')),
-    ('Beste Worte', 'top_words', url_for('top_words')),
-    ('Neu', 'new_word', url_for('new_word')),
-    ('Abstimmen', 'vote_new', url_for('vote_new')),
-    ('Über <span class="wordmark">Straßendeutsch</span>'|safe, 'about', url_for('about'))
+      ('Hauptseite', 'index', url_for('index')),
+      ('Beste Wörter', 'top_words', url_for('top_words')),
+      ('Neu', 'new_word', url_for('new_word')),
+      ('Abstimmen', 'vote_new', url_for('vote_new')),
+      ('Über <span class="wordmark">Straßendeutsch</span>'|safe, 'about', url_for('about'))
     ) %}
     <li{{ ' class="active"'|safe if short == active else '' }}><a
       href="{{ href }}">{{ title }}</a></li>
@@ -27,4 +27,20 @@
   #}<span class="counts"><strong class="up" title="hoch">{{ word.votes.up }}</strong> /
     <strong class="down" title="runter">{{ word.votes.down }}</strong></span>
 </div>
+{% endmacro %}
+
+
+{% macro listitem(word, tags=True, width=8) %}
+  <div class="span{{ width }} well word">
+    {{ vote(word) }}
+    <h2><a href="{{ word.to_url }}">{{ word.title }}</a></h2>
+    <p>{{ word.definition }}</p>
+    {% if tags %}
+      <p>
+      {% for tag in word.tags %}
+        <a class="label" href="{{ url_for('search', q=tag) }}">{{ tag }}</a>
+      {% endfor %}
+      </p>
+    {% endif %}
+  </div>
 {% endmacro %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "macros.html" import vote %}
+{% from "macros.html" import listitem %}
 
 {% block title %}Suche: {{ q }}{% endblock %}
 {% block content_id %}search{% endblock %}
@@ -13,16 +13,7 @@
 
 {% for word in words %}
   <div class="row">
-    <div class="span8 well word">
-      {{ vote(word) }}
-      <h2><a href="{{ word.to_url }}">{{ word.title }}</a></h2>
-      <p>{{ word.definition }}</p>
-      <p>
-      {% for tag in word.tags %}
-        <span class="label">{{ tag }}</span>
-      {% endfor %}
-      </p>
-    </div>
+    {{ listitem(word) }}
   </div>
 {% endfor %}
 

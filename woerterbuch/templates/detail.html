@@ -20,7 +20,7 @@
   <div class="span10">
     <p>
     {% for tag in word.tags %}
-      <span class="label">{{ tag }}</span>
+      <a class="label" href="{{ url_for('search', q=tag) }}">{{ tag }}</a>
     {% endfor %}
     </p>
   </div>

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "macros.html" import vote %}
+{% from "macros.html" import listitem %}
 
 {% block searchbox %}{% endblock %}
 
@@ -38,11 +38,7 @@
 </div>
 <div class="row">
   {% for word in words %}
-    <div class="span5 well word">
-      {{ vote(word) }}
-      <h2><a href="{{ word.to_url }}">{{ word.title }}</a></h2>
-      <p>{{ word.definition }}</p>
-    </div>
+    {{ listitem(word, tags=False, width=5) }}
   {% endfor %}
 </div>
 {% endblock %}

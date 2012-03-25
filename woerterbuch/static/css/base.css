@@ -60,6 +60,10 @@ body {
     margin: 20px 0;
 }
 
+a.label:hover {
+    color: #fff;
+}
+
 footer p {
     opacity: .7;
 }
